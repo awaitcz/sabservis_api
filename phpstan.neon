@@ -1,0 +1,45 @@
+parameters:
+    level: 8
+    fileExtensions:
+        - php
+        - phpt
+    paths:
+        - src
+    phpVersion: 80100
+
+    reportMaybesInPropertyPhpDocTypes: false
+    treatPhpDocTypesAsCertain: false
+
+    ignoreErrors:
+        # Ignore unsage usage of new static()
+        - '#^Unsafe usage of new static\(\)\.$#'
+
+        # Override OpenAPI default parameters()
+        - '#Parameter \#1 (\$path|\$ref) of method OpenApi\\Attributes.+#'
+
+        # Override OpenAPI default parameters()
+        - '#Class Sabservis\\Api\\Mapping\\(Request|Response)\\AbstractEntity implements generic interface IteratorAggregate but does not specify its types: TKey, TValue+#'
+
+        # Ignore bad php behavior - should not happen
+        - message: '#Result of \|\| is always true\.$#'
+          path: %currentWorkingDirectory%/src/Dispatcher/JsonDispatcher.php
+
+#        # ApiRoute optional flag
+#        - '#Constructor of class Apitte\\Presenter\\ApiRoute has an unused parameter \$flags.$#'
+#
+#        # Ignore bad php behavior - should not happen
+#        - message: '#\|false given\.$#'
+#          path: %currentWorkingDirectory%/src/Debug/Tracy/BlueScreen/ValidationBlueScreen.php
+#
+#        # Ignore PHP soft-failing functions
+#        - message: '#.+(int|string|string\>)\|false.+#'
+#          path: %currentWorkingDirectory%/src/OpenApi/SchemaDefinition/Entity/EntityAdapter.php
+
+#        # Nette changed return typehint
+#        - message: "#^Method Apitte\\\\OpenApi\\\\SchemaDefinition\\\\Entity\\\\EntityAdapter\\:\\:getNativePropertyType\\(\\) should return string but returns array\\<string\\>\\|string\\.$#"
+#          path: %currentWorkingDirectory%/src/OpenApi/SchemaDefinition/Entity/EntityAdapter.php
+#
+#        # Nette changed return typehint
+#        - message: "#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, array\\<string\\>\\|string\\> given\\.$#"
+#          path: %currentWorkingDirectory%/src/OpenApi/SchemaDefinition/Entity/EntityAdapter.php
+

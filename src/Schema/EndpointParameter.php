@@ -1,0 +1,136 @@
+<?php declare(strict_types = 1);
+
+namespace Sabservis\Api\Schema;
+
+class EndpointParameter
+{
+
+	public const TYPE_STRING = 'string';
+
+	public const TYPE_INTEGER = 'int';
+
+	public const TYPE_FLOAT = 'float';
+
+	public const TYPE_BOOLEAN = 'boolean';
+
+	public const TYPE_DATETIME = 'datetime';
+
+	public const TYPES = [
+		self::TYPE_STRING,
+		self::TYPE_INTEGER,
+		self::TYPE_FLOAT,
+		self::TYPE_BOOLEAN,
+		self::TYPE_DATETIME,
+	];
+
+	public const IN_QUERY = 'query';
+
+	public const IN_COOKIE = 'cookie';
+
+	public const IN_HEADER = 'header';
+
+	public const IN_PATH = 'path';
+
+	public const IN = [
+		self::IN_QUERY,
+		self::IN_COOKIE,
+		self::IN_HEADER,
+		self::IN_PATH,
+	];
+
+	private string|null $description = null;
+
+	private string $in = self::IN_PATH;
+
+	private bool $required = true;
+
+	private bool $deprecated = false;
+
+	private bool $allowEmpty = false;
+
+	public function __construct(
+		private string $name,
+		private string $type = self::TYPE_STRING,
+	)
+	{
+	}
+
+	public function getName(): string
+	{
+		return $this->name;
+	}
+
+	public function getType(): string
+	{
+		return $this->type;
+	}
+
+	public function getSchemaType(): string
+	{
+		switch ($this->type) {
+			case self::TYPE_STRING:
+			case self::TYPE_FLOAT:
+			case self::TYPE_DATETIME:
+				return $this->type;
+			case self::TYPE_BOOLEAN:
+				return 'boolean';
+			case self::TYPE_INTEGER:
+				return 'integer';
+			default:
+				// custom type
+
+				return 'string';
+		}
+	}
+
+	public function getDescription(): string|null
+	{
+		return $this->description;
+	}
+
+	public function setDescription(string|null $description): void
+	{
+		$this->description = $description;
+	}
+
+	public function getIn(): string
+	{
+		return $this->in;
+	}
+
+	public function setIn(string $in): void
+	{
+		$this->in = $in;
+	}
+
+	public function isRequired(): bool
+	{
+		return $this->required;
+	}
+
+	public function setRequired(bool $required): void
+	{
+		$this->required = $required;
+	}
+
+	public function isDeprecated(): bool
+	{
+		return $this->deprecated;
+	}
+
+	public function setDeprecated(bool $deprecated): void
+	{
+		$this->deprecated = $deprecated;
+	}
+
+	public function isAllowEmpty(): bool
+	{
+		return $this->allowEmpty;
+	}
+
+	public function setAllowEmpty(bool $allowEmpty): void
+	{
+		$this->allowEmpty = $allowEmpty;
+	}
+
+}
